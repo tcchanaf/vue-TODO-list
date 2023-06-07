@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     vue(),
     viteMockServe({
-      mockPath: "./mocks/"
+      mockPath: "./src/mocks/"
     })
   ],
   resolve: {
