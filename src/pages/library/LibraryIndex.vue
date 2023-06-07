@@ -1,5 +1,6 @@
 <template>
-    <el-container style="min-height: 400px">
+    <!-- <el-container> style="min-height: 400px"> -->
+    <el-container>
         <el-aside style="width: 200px; margin-top: 20px">
             <switch></switch>
             <SideMenu/>
