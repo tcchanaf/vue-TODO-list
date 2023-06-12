@@ -2,17 +2,14 @@
     <div>
         <div v-for="item in todoDocuments" :key="item.id">
             <el-tooltip :content="item.tooltip" effect="dark" placement="right">
-                <el-card>
-                <div slot="header" class="clearfix">
-                    <span>{{ item.title }}</span>
-                </div>
-                <div class="cover" @click="editDoc(item)">
-                    <img :src="item.cover" style="width: 100%">
-                </div>
-                <div>
-                    <p>{{ item.description }}</p>
-                    <p>Price: {{ item.price }}</p>
-                </div>
+                <el-card @click="editDoc(item)">
+                    <div slot="header" class="title">
+                        <span>{{ item.title }}</span>
+                    </div>
+                    <div>
+                        <p>{{ item.description }}</p>
+                        <p>Datetime: {{ (new Date(item.date)).toISOString().substring(0, 19) }}</p>
+                    </div>
                 </el-card>
             </el-tooltip>
         </div>
@@ -28,6 +25,7 @@ import axios from "axios";
 import EditForm from "@/pages/library/EditForm.vue";
 import { ElMessage } from 'element-plus'
 
+
 export default {
     name: 'Documents',
     components: { EditForm },
@@ -37,7 +35,7 @@ export default {
             currentPage: 1,
             pageSize: 10,
             dialogFormVisible: false,
-            editedDoc: null,
+            editedDoc: {},
         }
     },
 
@@ -46,18 +44,23 @@ export default {
     },
 
     methods: {
-        loadDocs() {
-        axios.get('/api/todoDocs')
-            .then(resp => {
-            if (resp && resp.status === 200) {
-                this.todoDocuments = resp.data
-            }
+        loadDocs(fromDeadline, toDeadline) {
+            axios.get('/api/todoDocs', {
+                params: {
+                    fromDeadline,
+                    toDeadline
+                }
+            }).then(resp => {
+                if (resp && resp.status === 200) {
+                    this.todoDocuments = resp.data
+                }
             })
         },
 
         editDoc(item) {
             this.editedDoc = item
             this.dialogFormVisible = true
+            // after Dom update
             this.$nextTick(() => {
                 this.$refs.edit.setForm(item)
             })
@@ -66,12 +69,8 @@ export default {
         saveDoc(editedDoc) {
             axios.post('/api/saveDoc', {
                 id: editedDoc.id,
-                cover: editedDoc.cover,
                 title: editedDoc.title,
-                author: editedDoc.author,
                 date: editedDoc.date,
-                press: editedDoc.press,
-                price: editedDoc.price,
                 description: editedDoc.description,
                 tooltip: editedDoc.tooltip,
             }).then(resp => {
@@ -95,10 +94,14 @@ export default {
 
 <style scoped>
 .el-card {
-    width: 135px;
+    width: 450px;
     margin-bottom: 20px;
-    height: 233px;
+    height: 150px;
     float: left;
     margin-right: 15px;
+}
+
+.title {
+    font-size: 25px;
 }
 </style>

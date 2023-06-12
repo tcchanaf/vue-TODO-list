@@ -3,15 +3,20 @@
         <el-form-item label="Title:">
             <el-input v-model="form.title"></el-input>
         </el-form-item>
-        <el-form-item label="Cover">
-            <el-input v-model="form.cover"></el-input>
-        </el-form-item>
         <el-form-item label="Description">
             <el-input v-model="form.description"></el-input>
         </el-form-item>
-        <el-form-item label="Price">
-            <el-input v-model="form.price"></el-input>
+        <el-form-item label="Date">
+            <el-date-picker
+                v-model="form.date"
+                type="datetime"
+                placeholder="Select date and time"
+                :default-time="currentDate"
+                :shortcuts="datePickerShortcuts"
+                class="datetime-picker"
+            />
         </el-form-item>
+
         <el-form-item>
             <el-button type="primary" @click="onSubmit">Submit</el-button>
         </el-form-item>
@@ -19,22 +24,44 @@
 </template>
 
 <script>
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 
 export default {
     name: 'EditForm',
-    props: {
-        value: Object,
-    },
     data() {
         return {
-        form: {
-            id: null,
-            title: '',
-            cover: '',
-            description: '',
-            price: '',
-        },
+            form: {
+                id: null,
+                title: '',
+                date: '',
+                description: '',
+            },
+            datePickerShortcuts: [
+                {
+                    text: 'In Two Hours',
+                    value: () => {
+                        const date = new Date()
+                        date.setTime(date.getTime() + 2 * 3600 * 1000)
+                        return date
+                    },
+                },
+                {
+                    text: 'Tomorrow',
+                    value: () => {
+                        const date = new Date()
+                        date.setTime(date.getTime() + 2 * 24 * 3600 * 1000)
+                        return date
+                    },
+                },
+                {
+                    text: 'Next Week',
+                    value: () => {
+                        const date = new Date()
+                        date.setTime(date.getTime() + 7 * 24 * 3600 * 1000)
+                        return date
+                    },
+                },
+            ]
         };
     },
     methods: {
@@ -60,6 +87,27 @@ export default {
                 },
             })
         },
+
     },
+
+    computed: {
+        currentDate() {
+            return new Date();
+        }
+    }
 };
 </script>
+
+<style scoped>
+
+.datetime-picker {
+  /* display: flex;
+  width: 100%;
+  padding: 50;
+  flex-wrap: wrap; */
+    padding: 30px 0;
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  flex: 1;
+}
+</style>

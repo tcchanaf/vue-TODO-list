@@ -1,31 +1,33 @@
 <template>
     <el-menu
-        default-active="2"
-        class="categories"
-        active-text-color="red"
-      >
-        <el-menu-item index="3">
-          <el-icon><Document /></el-icon>
-          <span>Urgent</span>
-        </el-menu-item>
-        <el-menu-item index="0">
-          <el-icon><Document /></el-icon>
-          <span>Navigator2</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
-      </el-menu>
+    default-active="0"
+    class="categories"
+    active-text-color="red"
+    @select="onSelect"
+    >
+        <div v-for="item in menuItems" :key="item.index">
+            <el-menu-item :index="item.index">
+                <el-icon>
+                    <component :is="item.icon.name"></component>
+                </el-icon>
+                <span>{{ item.menuTitle }}</span>
+            </el-menu-item>
+        </div>
+    </el-menu>
 </template>
 
 
 <script>
-    import { Document } from '@element-plus/icons-vue'
+export default {
+    name: 'SideMenu',
+    props: ['menuItems'],
 
-    export default {
-        name: 'SideMenu'
+    methods: {
+        onSelect (sideMenuIndex) {
+            this.$emit('indexSelect', sideMenuIndex);
+        }
     }
+}
 </script>
 
 

@@ -2,7 +2,8 @@ export default [
     {
         url: "/api/login",
         method: "post",
-        response: () => {
+        response: (request) => {
+            console.log(request)
             return {'code': 200}
         }
     },
