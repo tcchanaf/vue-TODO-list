@@ -27,9 +27,9 @@
             return {
                 keywords: "",
                 navList: [
-                    {name: '/library', navItem: 'Todo Item'},
-                    {name: '/test', navItem: 'Finished Item'},
-                    {name: '/index', navItem: 'Index'},
+                    {name: '/todo', navItem: 'Todo Item'},
+                    {name: '/finish', navItem: 'Finished Item'},
+                    {name: '/about', navItem: 'About'},
                 ]
             }
         }

@@ -46,6 +46,7 @@ export default {
 
     methods: {
         loadDocs(fromDeadline, toDeadline) {
+            const isDone = this.isDone
             axios.get('/api/todoDocs', {
                 params: {
                     fromDeadline,
@@ -75,6 +76,7 @@ export default {
                 date: editedDoc.date,
                 description: editedDoc.description,
                 tooltip: editedDoc.tooltip,
+                isDone: editedDoc.isDone
             }).then(resp => {
                 if (resp && resp.status === 200 && resp.data.code === 'success') {
                     var message = 'Success'

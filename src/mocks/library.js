@@ -7,43 +7,58 @@ export default [
                 {
                     id: '1',
                     title: 'minions',
-                    date: Date.parse('05 May 2023 16:12:00 GMT'),
+                    date: Date.parse('13 June 2023 15:12:00 GMT'),
                     description: 'it is all about bananas',
                     tooltip: 'This is the tooltip for Item 1',
+                    isDone: false,
                 },
                 {
                     id: '2',
                     title: 'minions',
                     date: Date.parse('04 May 2023 00:12:00 GMT'),
                     description: 'it is all about bananas',
-                    tooltip: 'This is the tooltip for Item 1',
+                    tooltip: 'This is the tooltip for Item 2',
+                    isDone: false,
                 },
                 {
                     id: '3',
                     title: 'minions',
                     date: Date.parse('04 May 2023 00:12:00 GMT'),
                     description: 'it is all about bananas',
-                    tooltip: 'This is the tooltip for Item 1',
+                    tooltip: 'This is the tooltip for Item 3',
+                    isDone: false,
                 },
                 {
                     id: '4',
                     title: 'minions',
                     date: Date.parse('04 May 2023 00:12:00 GMT'),
                     description: '',
-                    tooltip: 'This is the tooltip for Item 1',
+                    tooltip: 'This is the tooltip for Item 4',
+                    isDone: false,
+                },
+                {
+                    id: '5',
+                    title: 'Finish',
+                    date: new Date().getTime(),
+                    description: 'You have finished it!!!',
+                    tooltip: 'This is the tooltip for Item 5',
+                    isDone: true,
                 },
             ]
 
+            var filteredTodoDocs = todoDocs.filter(function(todoDoc) {
+                return todoDoc.isDone.toString() === request.query['isDone'];
+            });
+            
             if (!request.query['fromDeadline'] || !request.query['toDeadline']) {
-                console.log("request.query['toDeadline']: " +  request.query['toDeadline'])
-                console.log("request.query['fromDeadline']: " +  request.query['fromDeadline'])
-                return todoDocs
+                   return filteredTodoDocs
             }
 
             var fromDeadline = parseInt(request.query['fromDeadline'])
             var toDeadline = parseInt(request.query['toDeadline'])
-            var filteredTodoDocs = todoDocs.filter(function(todoDoc) {
-                return fromDeadline <= todoDoc.date && todoDoc.date <= toDeadline ;
+            filteredTodoDocs = filteredTodoDocs.filter(function(todoDoc) {
+                return fromDeadline <= todoDoc.date 
+                    && todoDoc.date <= toDeadline 
             });
 
             return filteredTodoDocs

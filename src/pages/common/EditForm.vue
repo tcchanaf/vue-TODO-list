@@ -16,6 +16,14 @@
                 class="datetime-picker"
             />
         </el-form-item>
+        <el-form-item label="Status">
+          <el-switch
+                v-model="form.isDone"
+                size="large"
+                active-text="Done"
+                inactive-text="Ongoing"
+            />
+        </el-form-item>
 
         <el-form-item>
             <el-button type="primary" @click="onSubmit">Submit</el-button>
@@ -66,11 +74,12 @@ export default {
     },
     methods: {
         setForm(doc) {
-            this.form.id = doc.id;
-            this.form.title = doc.title;
-            this.form.cover = doc.cover;
-            this.form.description = doc.description;
-            this.form.price = doc.price;
+            this.form.id = doc.id
+            this.form.title = doc.title
+            this.form.cover = doc.cover
+            this.form.description = doc.description
+            this.form.price = doc.price
+            this.form.isDone = doc.isDone
         },
 
         onSubmit() {

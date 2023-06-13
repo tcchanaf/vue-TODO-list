@@ -4,6 +4,8 @@ import Test from '@/pages/test/Test.vue'
 import Login from '@/pages/login/Login.vue'
 import Home from '@/pages/home/Home.vue'
 import TodoIndex from '@/pages/todo/TodoIndex.vue'
+import FinishIndex from '@/pages/finish/FinishIndex.vue'
+import About from '@/pages/about/About.vue'
 
 const routes = [
     {
@@ -30,20 +32,39 @@ const routes = [
             {
                 path: '/index',
                 name: 'AppIndex',
-                component: Test,
+                component: TodoIndex,
                 meta: {
                     requireAuth: true
                 }
             },
 
             {
-                path: '/library',
-                name: 'Library',
+                path: '/todo',
+                name: 'Todo Page',
                 component: TodoIndex,
                 meta: {
                     requireAuth: true
                 }
-            }
+            },
+
+
+            {
+                path: '/finish',
+                name: 'Finish Page',
+                component: FinishIndex,
+                meta: {
+                    requireAuth: true
+                }
+            },
+
+            {
+                path: '/about',
+                name: 'About Page',
+                component: About,
+                meta: {
+                    requireAuth: true
+                }
+            },
         ]
     },
 ]
