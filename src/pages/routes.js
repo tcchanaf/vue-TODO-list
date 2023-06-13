@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Test from '@/pages/test/Test.vue'
 import Login from '@/pages/login/Login.vue'
 import Home from '@/pages/home/Home.vue'
-import LibraryIndex from '@/pages/library/LibraryIndex.vue'
+import TodoIndex from '@/pages/todo/TodoIndex.vue'
 
 const routes = [
     {
@@ -39,7 +39,7 @@ const routes = [
             {
                 path: '/library',
                 name: 'Library',
-                component: LibraryIndex,
+                component: TodoIndex,
                 meta: {
                     requireAuth: true
                 }

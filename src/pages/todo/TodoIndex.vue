@@ -4,20 +4,20 @@
             <SideMenu v-bind:menuItems="sideMenuItems"  @indexSelect="listByBeforeDeadline" ref="sideMenu"/>
         </el-aside>
         <el-main>
-            <Documents ref="docs"/>
+            <Documents :isDone=false ref="docs"/>
         </el-main>
     </el-container>
 </template>
 
 
 <script>
-    import SideMenu from '@/pages/library/SideMenu.vue'
-    import Documents from '@/pages/library/Documents.vue'
+    import SideMenu from '@/pages/common/SideMenu.vue'
+    import Documents from '@/pages/common/Documents.vue'
     import { List, Clock, Document } from '@element-plus/icons-vue'
 
 
     export default {
-        name: 'AppLibrary',
+        name: 'TodoIndex',
         components: { SideMenu, Documents },
 
         data () {
@@ -26,7 +26,6 @@
                     {"index": '0', "menuTitle": "Today Deadline", 'icon': Clock},
                     {"index": '1', "menuTitle": "This Week Deadline", 'icon': Document},
                     {"index": '2', "menuTitle": "All", 'icon': List},
-
                 ]
             }
         },

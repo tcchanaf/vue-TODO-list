@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         <p>{{ item.description }}</p>
-                        <p>Datetime: {{ (new Date(item.date)).toISOString().substring(0, 19) }}</p>
+                        <p>Deadline: {{ (new Date(item.date)).toISOString().substring(0, 19) }}</p>
                     </div>
                 </el-card>
             </el-tooltip>
@@ -22,13 +22,14 @@
 
 <script>
 import axios from "axios";
-import EditForm from "@/pages/library/EditForm.vue";
+import EditForm from "@/pages/common/EditForm.vue";
 import { ElMessage } from 'element-plus'
 
 
 export default {
     name: 'Documents',
     components: { EditForm },
+    props: ['isDone'],
     data () {
         return {
             todoDocuments: [],
@@ -48,7 +49,8 @@ export default {
             axios.get('/api/todoDocs', {
                 params: {
                     fromDeadline,
-                    toDeadline
+                    toDeadline,
+                    isDone
                 }
             }).then(resp => {
                 if (resp && resp.status === 200) {
