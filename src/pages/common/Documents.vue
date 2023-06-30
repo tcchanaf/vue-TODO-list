@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div v-if="!isDone" align="left">
+            <el-button type="primary" round @click="addDoc">Add New Mission</el-button>
+        </div>
         <div v-for="item in todoDocuments" :key="item.id">
             <el-tooltip :content="item.tooltip" effect="dark" placement="right">
                 <el-card @click="editDoc(item)">
@@ -13,9 +16,8 @@
                 </el-card>
             </el-tooltip>
         </div>
-
         <el-dialog title="Edit Document" v-model="dialogFormVisible">
-            <EditForm @submit="saveDoc" ref="edit" />
+            <EditForm @submit="saveDoc" @delete="deleteDoc" ref="edit" />
         </el-dialog>
     </div>
 </template>
@@ -36,7 +38,6 @@ export default {
             currentPage: 1,
             pageSize: 10,
             dialogFormVisible: false,
-            editedDoc: {},
         }
     },
 
@@ -60,12 +61,21 @@ export default {
             })
         },
 
-        editDoc(item) {
-            this.editedDoc = item
+        addDoc() {
+            console.log("addDoc")
             this.dialogFormVisible = true
             // after Dom update
             this.$nextTick(() => {
-                this.$refs.edit.setForm(item)
+                this.$refs.edit.isCreate = true
+                this.$refs.edit.setForm({}, true)
+            })
+        },
+
+        editDoc(item) {
+            this.dialogFormVisible = true
+            // after Dom update
+            this.$nextTick(() => {
+                this.$refs.edit.setForm(item, false)
             })
         },
 
@@ -92,6 +102,25 @@ export default {
                 })
             })
         },       
+
+        deleteDoc(editDocId) {
+            axios.post('/api/deleteDoc', {
+                id: editDocId,
+            }).then(resp => {
+                if (resp && resp.status === 200 && resp.data.code === 'success') {
+                    var message = 'Success'
+                    this.dialogFormVisible = false
+                    this.loadDocs()
+                } else {
+                    var message = 'Fail to Delete'
+                }
+
+                ElMessage({
+                    type: 'info',
+                    message: message,
+                })
+            })
+        },  
     }
 }
 </script>

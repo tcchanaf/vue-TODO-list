@@ -25,9 +25,14 @@
             />
         </el-form-item>
 
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">Submit</el-button>
+        <el-form-item v-if="isCreate">
+            <el-button type="primary" @click="onSubmit">Create</el-button>
         </el-form-item>
+        <el-form-item v-else>
+            <el-button type="primary" @click="onSubmit">Save</el-button>
+            <el-button type="danger" @click="onDelete">Delete</el-button>
+        </el-form-item>
+
     </el-form>
 </template>
 
@@ -38,6 +43,7 @@ export default {
     name: 'EditForm',
     data() {
         return {
+            isCreate: true,
             form: {
                 id: null,
                 title: '',
@@ -73,12 +79,11 @@ export default {
         };
     },
     methods: {
-        setForm(doc) {
+        setForm(doc, isCreate) {
+            this.isCreate = isCreate
             this.form.id = doc.id
             this.form.title = doc.title
-            this.form.cover = doc.cover
             this.form.description = doc.description
-            this.form.price = doc.price
             this.form.isDone = doc.isDone
         },
 
@@ -92,6 +97,21 @@ export default {
                 callback: (action) => {
                     if (action === 'confirm') {
                         this.$emit('submit', this.form);
+                    }
+                },
+            })
+        },
+
+        onDelete() {
+            ElMessageBox.alert('Confirm to Delete?', null, {
+                center: true,
+                autofocus: true,
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                cancelButtonText: "Cancel",
+                callback: (action) => {
+                    if (action === 'confirm') {
+                        this.$emit('delete', this.form.id);
                     }
                 },
             })

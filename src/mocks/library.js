@@ -74,4 +74,13 @@ export default [
             return {'code': 'success'}
         }
     },
+
+    {
+        url: "/api/deleteDoc",
+        method: "post",
+        response: (request) => {
+            console.log(request)
+            return {'code': 'success'}
+        }
+    },
 ]
